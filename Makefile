@@ -4,6 +4,10 @@ VENV := .venv
 BIN := $(VENV)/bin
 export PATH := /Applications/Docker.app/Contents/Resources/bin:$(HOME)/.local/bin:$(PATH)
 
+# Spark needs a JDK; on macOS pick up the default from java_home when present.
+JAVA_HOME ?= $(shell /usr/libexec/java_home 2>/dev/null)
+export JAVA_HOME
+
 export AWS_ENDPOINT_URL ?= http://localhost:4566
 export AWS_REGION ?= us-east-1
 export AWS_DEFAULT_REGION ?= us-east-1

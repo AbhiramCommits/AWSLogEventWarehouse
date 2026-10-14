@@ -1,0 +1,66 @@
+{
+  "database": "logwarehouse",
+  "tables": {
+    "curated_app_log": {
+      "location": "s3://logwarehouse-curated/curated/source=app_log",
+      "columns": [
+        "event_id",
+        "event_time",
+        "service",
+        "host",
+        "level",
+        "status_code",
+        "latency_ms",
+        "route",
+        "user_id",
+        "trace_id",
+        "message",
+        "source",
+        "ingest_time",
+        "event_ts",
+        "hour",
+        "ingest_lag_seconds",
+        "is_null_key",
+        "status_class",
+        "is_error"
+      ],
+      "partition_keys": [
+        "dt"
+      ],
+      "partitions": [
+        "2026-10-13",
+        "2026-10-14"
+      ]
+    },
+    "curated_clickstream": {
+      "location": "s3://logwarehouse-curated/curated/source=clickstream",
+      "columns": [
+        "event_id",
+        "event_time",
+        "session_id",
+        "user_id",
+        "page",
+        "referrer",
+        "device",
+        "country",
+        "action",
+        "dwell_ms",
+        "experiment_variant",
+        "source",
+        "ingest_time",
+        "event_ts",
+        "hour",
+        "ingest_lag_seconds",
+        "is_null_key",
+        "is_error"
+      ],
+      "partition_keys": [
+        "dt"
+      ],
+      "partitions": [
+        "2026-10-13",
+        "2026-10-14"
+      ]
+    }
+  }
+}
