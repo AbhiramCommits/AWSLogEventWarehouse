@@ -17,6 +17,22 @@ from logwarehouse.aws import client
 from logwarehouse.config import get_settings
 
 
+def ensure_kinesis(shards: int = 2) -> str:
+    """Create the Kinesis stream (moto sidecar) if it does not exist."""
+    settings = get_settings()
+    kinesis = client("kinesis", settings)
+    try:
+        kinesis.create_stream(StreamName=settings.stream_name, ShardCount=shards)
+        kinesis.get_waiter("stream_exists").wait(StreamName=settings.stream_name)
+        print(f"created kinesis stream {settings.stream_name}")
+    except ClientError as exc:
+        code = exc.response["Error"]["Code"]
+        if code not in {"ResourceInUseException", "LimitExceededException"}:
+            raise
+        print(f"kinesis stream {settings.stream_name} already exists ({code})")
+    return settings.stream_name
+
+
 def ensure_glue_database() -> str:
     """Create the Glue catalog database if it does not already exist."""
     settings = get_settings()
@@ -73,6 +89,7 @@ def list_streams() -> list[str]:
 
 def main() -> int:
     """Bootstrap local pro resources and print the Kinesis streams."""
+    ensure_kinesis()
     ensure_glue_database()
     ensure_firehose()
     streams = list_streams()

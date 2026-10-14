@@ -16,7 +16,7 @@ export FIREHOSE_NAME ?= log-events-firehose
 export TF_ENV := AWS_ENDPOINT_URL=$(AWS_ENDPOINT_URL)
 
 .PHONY: help venv install up down wait tf-init tf-apply tf-destroy tf-fmt lint fmt test \
-        produce transform catalog warehouse bench monitor dashboard pipeline clean
+        produce transform catalog warehouse bench monitor dashboard pipeline reset clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
@@ -89,6 +89,9 @@ dashboard: ## Serve the Streamlit dashboard
 
 pipeline: ## Run the full end-to-end pipeline
 	$(BIN)/python scripts/run_pipeline.py
+
+reset: ## Wipe local S3/Kinesis/artifacts for a clean run
+	$(BIN)/python scripts/reset_state.py
 
 clean: ## Remove caches and build output
 	rm -rf .pytest_cache .ruff_cache **/__pycache__ artifacts/coverage.xml

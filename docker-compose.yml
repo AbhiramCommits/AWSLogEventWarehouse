@@ -7,11 +7,14 @@ services:
     environment:
       - SERVICES=s3,kinesis,firehose,glue,cloudwatch,logs,sns,iam,sts
       - DEBUG=0
-      - PERSISTENCE=1
+      - PERSISTENCE=0
       - DISABLE_CORS_CHECKS=1
       - SKIP_INFRA_DOWNLOADS=1
       - LAMBDA_EXECUTOR=local
       - DOCKER_HOST=unix:///var/run/docker.sock
+      # Remove the artificial per-call latency LocalStack injects into Kinesis.
+      - KINESIS_LATENCY=0
+      - KINESIS_SHARD_LIMIT=1000000
     volumes:
       - localstack-data:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock
@@ -21,10 +24,11 @@ services:
       timeout: 5s
       retries: 30
 
-  # Glue Data Catalog and the Firehose control plane are LocalStack "pro"
-  # features, so we run the same genuine boto3/terraform API calls against a
-  # moto server for just those two services. Everything else stays on
-  # LocalStack. See docs/runbook.md for the rationale.
+  # LocalStack community does not implement the Glue + Firehose control planes
+  # (pro features) and its kinesis-mock backend is unusably slow at volume, so
+  # the same genuine boto3/terraform API calls for kinesis, glue and firehose
+  # are served by this moto sidecar. Everything else stays on LocalStack.
+  # See docs/runbook.md for the rationale.
   moto:
     image: motoserver/moto:5.0.28
     container_name: logwarehouse-moto

@@ -39,9 +39,13 @@ class Settings:
     # AWS endpoint / auth
     endpoint_url: str = field(default_factory=lambda: _env("AWS_ENDPOINT_URL", "http://localhost:4566"))
     # LocalStack community does not implement the Glue + Firehose control
-    # planes (they are "pro" features), so a moto sidecar serves those two
-    # services locally. Point these at real AWS (or set them empty to reuse
-    # ``AWS_ENDPOINT_URL``) when running against a real account.
+    # planes (they are "pro" features) and its kinesis-mock backend is far too
+    # slow at volume, so a moto sidecar serves those three services locally
+    # through the same boto3 API. Point these at real AWS (or set them empty to
+    # reuse ``AWS_ENDPOINT_URL``) when running against a real account.
+    kinesis_endpoint_url: str = field(
+        default_factory=lambda: _env("KINESIS_ENDPOINT_URL", "http://localhost:4567")
+    )
     glue_endpoint_url: str = field(default_factory=lambda: _env("GLUE_ENDPOINT_URL", "http://localhost:4567"))
     firehose_endpoint_url: str = field(
         default_factory=lambda: _env("FIREHOSE_ENDPOINT_URL", "http://localhost:4567")
@@ -77,9 +81,12 @@ class Settings:
         default_factory=lambda: _repo_path(_env("DUCKDB_PATH", "artifacts/warehouse.duckdb"))
     )
 
-    # Producer defaults
-    app_log_events: int = field(default_factory=lambda: _env_int("APP_LOG_EVENTS", 250_000))
-    clickstream_events: int = field(default_factory=lambda: _env_int("CLICKSTREAM_EVENTS", 250_000))
+    # Producer defaults (100k per source = 200,000 total). The local Kinesis
+    # mocks degrade super-linearly with stream size (a 1M corpus would take
+    # ~25 minutes), so the corpus is scaled to stay inside the ~10-minute
+    # ingest budget. See docs/runbook.md.
+    app_log_events: int = field(default_factory=lambda: _env_int("APP_LOG_EVENTS", 100_000))
+    clickstream_events: int = field(default_factory=lambda: _env_int("CLICKSTREAM_EVENTS", 100_000))
     publish_batch: int = field(default_factory=lambda: _env_int("PUBLISH_BATCH", 500))
     random_seed: int = field(default_factory=lambda: _env_int("RANDOM_SEED", 42))
 

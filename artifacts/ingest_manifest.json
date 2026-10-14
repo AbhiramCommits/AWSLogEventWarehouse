@@ -1,0 +1,23 @@
+{
+  "sources": {
+    "app_log": {
+      "source": "app_log",
+      "events": 100000,
+      "bytes": 41549824,
+      "seconds": 51.79,
+      "records_per_sec": 1930.9,
+      "put_records_calls": 200,
+      "stream": "log-events-stream"
+    },
+    "clickstream": {
+      "source": "clickstream",
+      "events": 100000,
+      "bytes": 34683187,
+      "seconds": 170.562,
+      "records_per_sec": 586.3,
+      "put_records_calls": 200,
+      "stream": "log-events-stream"
+    }
+  },
+  "total_events": 200000
+}
