@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-10-14T08:17:05.799182+00:00",
+  "freshness_minutes": 3.7,
+  "total_events": 193128,
+  "events_last_hour": 9085,
+  "events_last_hour_by_source": {
+    "clickstream": 4661,
+    "app_log": 4578
+  },
+  "trailing_hourly_avg": 3727.5,
+  "events_last_hour_drop_pct": -143.73,
+  "ingest_lag_p50": 46.0,
+  "ingest_lag_p95": 88.0,
+  "ingest_lag_p99": 2482.0,
+  "error_rate_overall": 4.4333,
+  "error_rate_by_service": {
+    "checkout": 12.1293,
+    "recommendations": 2.2277,
+    "payments": 2.0904,
+    "auth": 1.9856,
+    "search": 1.9513,
+    "catalog": 1.8132
+  },
+  "quarantine_rate": 1.009,
+  "duplicate_rate": 1.9595,
+  "incident_active": false,
+  "published_datapoints": 18
+}

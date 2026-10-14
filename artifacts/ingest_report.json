@@ -1,17 +1,17 @@
 {
   "delivery_path": "worker",
   "delivery_reason": "firehose put_record_batch failed (500)",
-  "total_events": 4000,
-  "raw_bytes": 1523176,
-  "s3_objects": 50,
-  "s3_gzip_bytes": 302691,
+  "total_events": 200000,
+  "raw_bytes": 76216226,
+  "s3_objects": 68,
+  "s3_gzip_bytes": 13784878,
   "partitions": 50,
   "per_source": {
-    "app_log": 2000,
-    "clickstream": 2000
+    "app_log": 100000,
+    "clickstream": 100000
   },
-  "malformed_records": 42,
-  "seconds": 0.331,
-  "records_per_sec": 12083.4,
-  "expected_total": 4000
+  "malformed_records": 2018,
+  "seconds": 9.473,
+  "records_per_sec": 21112.8,
+  "expected_total": 200000
 }

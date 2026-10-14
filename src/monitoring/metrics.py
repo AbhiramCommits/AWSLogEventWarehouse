@@ -72,8 +72,22 @@ def compute_metrics(settings: Settings | None = None) -> dict[str, Any]:
     finally:
         con.close()
 
-    events_last_hour = hourly[-1][1] if hourly else 0
-    trailing = [c for _, c in hourly[-7:-1]]
+    # Use the most recent *complete* hour: the latest bucket is usually a
+    # partial clock-hour and would otherwise look like a volume collapse.
+    if len(hourly) >= 2:
+        complete = hourly[:-1]
+        events_last_hour = complete[-1][1]
+        latest_hour = complete[-1][0]
+    elif hourly:
+        complete = hourly
+        events_last_hour = hourly[-1][1]
+        latest_hour = hourly[-1][0]
+    else:
+        complete, events_last_hour, latest_hour = [], 0, None
+    # Compare like-for-like against the same hour-of-day on prior days to avoid
+    # false positives from the diurnal traffic curve.
+    same_hour = [c for h, c in complete[:-1] if latest_hour is not None and h.hour == latest_hour.hour]
+    trailing = same_hour if same_hour else [c for _, c in complete[-7:-1]]
     trailing_avg = sum(trailing) / len(trailing) if trailing else float(events_last_hour)
     drop_pct = ((trailing_avg - events_last_hour) / trailing_avg * 100) if trailing_avg else 0.0
 

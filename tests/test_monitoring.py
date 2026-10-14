@@ -105,3 +105,5 @@ def test_compute_metrics_against_real_warehouse() -> None:
     assert snapshot["total_events"] > 0
     assert snapshot["ingest_lag_p50"] <= snapshot["ingest_lag_p95"] <= snapshot["ingest_lag_p99"]
     assert set(snapshot["error_rate_by_service"])
+    # healthy data must not trip the data-quality gate
+    assert not any(r["breached"] for r in alarms.evaluate(snapshot, settings))

@@ -1,0 +1,118 @@
+{
+  "generated_at": "2026-10-14T01:17:08",
+  "stage_seconds": {
+    "bootstrap": 2.601,
+    "produce": 224.559,
+    "deliver": 9.902,
+    "transform": 21.371,
+    "catalog": 0.122,
+    "load": 0.969,
+    "benchmark": 5.045,
+    "monitor": 0.162,
+    "incident": 2.252
+  },
+  "total_wall_seconds": 266.983,
+  "headline": {
+    "corpus": {
+      "app_log_events": 100000,
+      "clickstream_events": 100000,
+      "total_events": 200000
+    },
+    "ingest": {
+      "total_events": 200000,
+      "raw_bytes": 76216226,
+      "s3_objects": 68,
+      "partitions": 50,
+      "records_per_sec": 21112.8,
+      "malformed_records": 2018,
+      "delivery_path": "worker"
+    },
+    "transform": {
+      "rows_in": 200000,
+      "rows_out": 193128,
+      "duplicates_removed": 3919,
+      "quarantined_rows": 2018,
+      "null_key_rows": 935,
+      "raw_gzip_bytes": 13784878,
+      "curated_bytes": 20348325,
+      "curated_files": 8,
+      "raw_uncompressed_bytes": 76216226,
+      "compression_ratio_vs_uncompressed": 3.75,
+      "compression_ratio_vs_gzip": 0.68
+    },
+    "warehouse": {
+      "curated_rows": 193128,
+      "fact_rows": 193128,
+      "fact_matches_curated": true,
+      "orphan_service_keys": 0,
+      "orphan_page_keys": 0,
+      "orphan_user_keys": 0,
+      "orphan_device_geo_keys": 0,
+      "duplicate_event_sk": 0,
+      "dim_user_rows": 48938,
+      "dim_user_duplicate_sk": 0,
+      "session_rollup_rows": 96541,
+      "passed": true,
+      "wall_seconds": 0.858
+    },
+    "query_benchmark": {
+      "q1_hourly_error_rate_by_service": {
+        "baseline_median_s": 0.173888,
+        "tuned_median_s": 0.000694,
+        "speedup_median": 250.56,
+        "results_match": true
+      },
+      "q2_funnel_conversion_by_variant": {
+        "baseline_median_s": 0.173625,
+        "tuned_median_s": 0.006535,
+        "speedup_median": 26.57,
+        "results_match": true
+      },
+      "q3_top_routes_p95_latency": {
+        "baseline_median_s": 0.156456,
+        "tuned_median_s": 0.001528,
+        "speedup_median": 102.39,
+        "results_match": true
+      }
+    },
+    "metrics": {
+      "generated_at": "2026-10-14T08:17:05.799182+00:00",
+      "freshness_minutes": 3.7,
+      "total_events": 193128,
+      "events_last_hour": 9085,
+      "events_last_hour_by_source": {
+        "clickstream": 4661,
+        "app_log": 4578
+      },
+      "trailing_hourly_avg": 3727.5,
+      "events_last_hour_drop_pct": -143.73,
+      "ingest_lag_p50": 46.0,
+      "ingest_lag_p95": 88.0,
+      "ingest_lag_p99": 2482.0,
+      "error_rate_overall": 4.4333,
+      "error_rate_by_service": {
+        "checkout": 12.1293,
+        "recommendations": 2.2277,
+        "payments": 2.0904,
+        "auth": 1.9856,
+        "search": 1.9513,
+        "catalog": 1.8132
+      },
+      "quarantine_rate": 1.009,
+      "duplicate_rate": 1.9595,
+      "incident_active": false,
+      "published_datapoints": 18
+    },
+    "alarms_fired": [
+      "logwarehouse-freshness",
+      "logwarehouse-rowcount-floor",
+      "logwarehouse-rowcount-drop",
+      "logwarehouse-error-rate",
+      "logwarehouse-quarantine-rate"
+    ],
+    "catalog_tables": [
+      "curated_app_log",
+      "curated_clickstream"
+    ]
+  }
+}

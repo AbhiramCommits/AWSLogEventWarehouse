@@ -1,15 +1,15 @@
 {
-  "curated_rows": 3868,
-  "fact_rows": 3868,
+  "curated_rows": 193128,
+  "fact_rows": 193128,
   "fact_matches_curated": true,
   "orphan_service_keys": 0,
   "orphan_page_keys": 0,
   "orphan_user_keys": 0,
   "orphan_device_geo_keys": 0,
   "duplicate_event_sk": 0,
-  "dim_user_rows": 3707,
+  "dim_user_rows": 48938,
   "dim_user_duplicate_sk": 0,
-  "session_rollup_rows": 1946,
+  "session_rollup_rows": 96541,
   "passed": true,
-  "wall_seconds": 0.167
+  "wall_seconds": 0.858
 }

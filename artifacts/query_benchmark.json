@@ -1,0 +1,110 @@
+{
+  "runs": 5,
+  "datasets": {
+    "baseline_csv_bytes": 32267011,
+    "tuned_parquet_bytes": 10791508,
+    "rollup_parquet_bytes": 2671,
+    "baseline_rows": 193128
+  },
+  "queries": {
+    "q1_hourly_error_rate_by_service": {
+      "baseline": {
+        "median_seconds": 0.173888,
+        "p95_seconds": 0.198214,
+        "times": [
+          0.198214,
+          0.173888,
+          0.168857,
+          0.170074,
+          0.180418
+        ],
+        "files_scanned": 2,
+        "rows_scanned": 193128,
+        "bytes_scanned": 32267011
+      },
+      "tuned": {
+        "median_seconds": 0.000694,
+        "p95_seconds": 0.000803,
+        "times": [
+          0.000803,
+          0.000591,
+          0.000569,
+          0.000783,
+          0.000694
+        ],
+        "files_scanned": 2,
+        "rows_scanned": 140,
+        "bytes_scanned": 2671
+      },
+      "speedup_median": 250.56,
+      "rows_reduction": 1379.49,
+      "results_match": true
+    },
+    "q2_funnel_conversion_by_variant": {
+      "baseline": {
+        "median_seconds": 0.173625,
+        "p95_seconds": 0.180103,
+        "times": [
+          0.163203,
+          0.180103,
+          0.173625,
+          0.170248,
+          0.174359
+        ],
+        "files_scanned": 2,
+        "rows_scanned": 193128,
+        "bytes_scanned": 32267011
+      },
+      "tuned": {
+        "median_seconds": 0.006535,
+        "p95_seconds": 0.006989,
+        "times": [
+          0.005491,
+          0.006535,
+          0.006989,
+          0.006561,
+          0.005466
+        ],
+        "files_scanned": 1,
+        "rows_scanned": 35125,
+        "bytes_scanned": 1968529
+      },
+      "speedup_median": 26.57,
+      "rows_reduction": 5.5,
+      "results_match": true
+    },
+    "q3_top_routes_p95_latency": {
+      "baseline": {
+        "median_seconds": 0.156456,
+        "p95_seconds": 0.168384,
+        "times": [
+          0.168384,
+          0.158619,
+          0.156456,
+          0.154745,
+          0.153944
+        ],
+        "files_scanned": 2,
+        "rows_scanned": 193128,
+        "bytes_scanned": 32267011
+      },
+      "tuned": {
+        "median_seconds": 0.001528,
+        "p95_seconds": 0.002086,
+        "times": [
+          0.002086,
+          0.001585,
+          0.001528,
+          0.00142,
+          0.001361
+        ],
+        "files_scanned": 1,
+        "rows_scanned": 35125,
+        "bytes_scanned": 1968529
+      },
+      "speedup_median": 102.39,
+      "rows_reduction": 5.5,
+      "results_match": true
+    }
+  }
+}

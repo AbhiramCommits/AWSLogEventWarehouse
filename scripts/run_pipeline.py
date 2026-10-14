@@ -181,9 +181,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--app-events", type=int, default=None)
     parser.add_argument("--click-events", type=int, default=None)
     parser.add_argument("--skip-bootstrap", action="store_true")
-    parser.add_argument("--reset", action="store_true", help="reset local state before running")
+    parser.add_argument("--no-reset", dest="reset", action="store_false",
+                        help="do not reset local state first (default: reset for idempotent runs)")
     parser.add_argument("--fail-stage", choices=STAGES, default=None)
     parser.add_argument("--small", action="store_true", help="tiny corpus (CI smoke test)")
+    parser.set_defaults(reset=True)
     args = parser.parse_args(argv)
     if args.small:
         args.app_events = args.app_events or 2000
