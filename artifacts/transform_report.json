@@ -13,7 +13,7 @@
       "ingest_lag_p99": 2445.0,
       "output_partitions": 4,
       "distinct_dt": 2,
-      "wall_seconds": 8.092,
+      "wall_seconds": 7.186,
       "raw_objects": 34,
       "raw_partitions": 25,
       "raw_gzip_bytes": 7816476,
@@ -33,7 +33,7 @@
       "ingest_lag_p99": 2400.0,
       "output_partitions": 4,
       "distinct_dt": 2,
-      "wall_seconds": 3.559,
+      "wall_seconds": 2.905,
       "raw_objects": 35,
       "raw_partitions": 25,
       "raw_gzip_bytes": 5976830,
@@ -54,6 +54,6 @@
     "compression_ratio_vs_uncompressed": 3.74,
     "compression_ratio_vs_gzip": 0.68
   },
-  "wall_seconds": 13.338,
-  "generated_at": "2026-10-14T00:46:55"
+  "wall_seconds": 11.467,
+  "generated_at": "2026-10-14T00:49:05"
 }

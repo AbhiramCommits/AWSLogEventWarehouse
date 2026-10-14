@@ -1,0 +1,15 @@
+{
+  "curated_rows": 193143,
+  "fact_rows": 193143,
+  "fact_matches_curated": true,
+  "orphan_service_keys": 0,
+  "orphan_page_keys": 0,
+  "orphan_user_keys": 0,
+  "orphan_device_geo_keys": 0,
+  "duplicate_event_sk": 0,
+  "dim_user_rows": 48985,
+  "dim_user_duplicate_sk": 0,
+  "session_rollup_rows": 96555,
+  "passed": true,
+  "wall_seconds": 0.651
+}

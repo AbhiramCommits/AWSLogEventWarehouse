@@ -28,6 +28,18 @@ def _list_keys(s3, bucket: str, prefix: str) -> list[dict]:
     return keys
 
 
+def _clear_prefix(s3, bucket: str, prefix: str) -> int:
+    """Delete all objects under a prefix so re-runs do not accumulate files."""
+    keys = _list_keys(s3, bucket, prefix)
+    removed = 0
+    for i in range(0, len(keys), 1000):
+        chunk = [{"Key": o["Key"]} for o in keys[i : i + 1000]]
+        if chunk:
+            s3.delete_objects(Bucket=bucket, Delete={"Objects": chunk})
+            removed += len(chunk)
+    return removed
+
+
 def stage_raw(s3, settings: Settings, source: str, dest: Path) -> tuple[int, int, int]:
     """Download a source's raw objects into a flat local directory.
 
@@ -84,6 +96,9 @@ def transform_source(spark, settings: Settings, source: str, work: Path) -> dict
         source,
         run_date=time.strftime("%Y-%m-%d"),
     )
+    # Clear stale output so re-runs replace rather than accumulate objects.
+    _clear_prefix(s3, settings.curated_bucket, f"{settings.curated_prefix}/source={source}/")
+    _clear_prefix(s3, settings.curated_bucket, f"quarantine/source={source}/")
     file_count, curated_bytes = upload_curated(s3, settings, curated_dir, source)
 
     # Upload quarantined rows too, so they are inspectable in the curated bucket.
