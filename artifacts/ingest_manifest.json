@@ -2,22 +2,22 @@
   "sources": {
     "app_log": {
       "source": "app_log",
-      "events": 100000,
-      "bytes": 41549824,
-      "seconds": 51.79,
-      "records_per_sec": 1930.9,
-      "put_records_calls": 200,
+      "events": 2000,
+      "bytes": 828728,
+      "seconds": 0.131,
+      "records_per_sec": 15234.6,
+      "put_records_calls": 4,
       "stream": "log-events-stream"
     },
     "clickstream": {
       "source": "clickstream",
-      "events": 100000,
-      "bytes": 34683187,
-      "seconds": 170.562,
-      "records_per_sec": 586.3,
-      "put_records_calls": 200,
+      "events": 2000,
+      "bytes": 694448,
+      "seconds": 0.123,
+      "records_per_sec": 16197.5,
+      "put_records_calls": 4,
       "stream": "log-events-stream"
     }
   },
-  "total_events": 200000
+  "total_events": 4000
 }

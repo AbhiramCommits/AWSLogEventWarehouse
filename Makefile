@@ -66,6 +66,11 @@ test: ## Run the test suite with coverage
 	$(BIN)/pytest --cov=logwarehouse --cov=producers --cov=glue --cov=warehouse \
 		--cov=monitoring --cov-report=term-missing --cov-report=xml:artifacts/coverage.xml
 
+test-unit: ## Run only non-integration tests with coverage
+	$(BIN)/pytest -m "not integration" --cov=logwarehouse --cov=producers --cov=glue \
+		--cov=warehouse --cov=monitoring --cov-report=term-missing \
+		--cov-report=xml:artifacts/coverage.xml
+
 produce: ## Generate and publish events, deliver to the raw zone
 	$(BIN)/python -m producers.publish --source app_log
 	$(BIN)/python -m producers.publish --source clickstream
