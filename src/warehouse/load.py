@@ -38,6 +38,7 @@ def connect(settings: Settings | None = None) -> duckdb.DuckDBPyConnection:
     con.execute(f"SET s3_access_key_id='{settings.access_key}';")
     con.execute(f"SET s3_secret_access_key='{settings.secret_key}';")
     con.execute(f"SET s3_region='{settings.region}';")
+    con.execute("SET TimeZone='UTC';")
     return con
 
 

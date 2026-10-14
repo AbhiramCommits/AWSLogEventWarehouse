@@ -94,7 +94,7 @@ class Settings:
     freshness_threshold_minutes: int = field(
         default_factory=lambda: _env_int("FRESHNESS_THRESHOLD_MINUTES", 120)
     )
-    rowcount_floor: int = field(default_factory=lambda: _env_int("ROWCOUNT_FLOOR", 1))
+    rowcount_floor: int = field(default_factory=lambda: _env_int("ROWCOUNT_FLOOR", 100))
     rowcount_drop_pct: float = field(default_factory=lambda: _env_float("ROWCOUNT_DROP_PCT", 60.0))
     error_rate_threshold: float = field(
         default_factory=lambda: _env_float("ERROR_RATE_THRESHOLD", 0.05)

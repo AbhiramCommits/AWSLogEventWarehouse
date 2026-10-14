@@ -1,0 +1,67 @@
+{
+  "Dataset": {
+    "Name": "logwarehouse_events",
+    "PhysicalTableMap": {
+      "app_log": {
+        "RelationalTable": {
+          "DataSourceArn": "arn:aws:quicksight:us-east-1:000000000000:datasource/logwarehouse-athena",
+          "Catalog": "AwsDataCatalog",
+          "Schema": "logwarehouse",
+          "Name": "curated_app_log",
+          "InputColumns": [
+            { "Name": "event_id", "Type": "STRING" },
+            { "Name": "event_ts", "Type": "DATETIME" },
+            { "Name": "dt", "Type": "STRING" },
+            { "Name": "hour", "Type": "STRING" },
+            { "Name": "service", "Type": "STRING" },
+            { "Name": "status_code", "Type": "INTEGER" },
+            { "Name": "status_class", "Type": "STRING" },
+            { "Name": "route", "Type": "STRING" },
+            { "Name": "latency_ms", "Type": "INTEGER" },
+            { "Name": "ingest_lag_seconds", "Type": "INTEGER" },
+            { "Name": "is_error", "Type": "BOOLEAN" }
+          ]
+        }
+      },
+      "clickstream": {
+        "RelationalTable": {
+          "DataSourceArn": "arn:aws:quicksight:us-east-1:000000000000:datasource/logwarehouse-athena",
+          "Catalog": "AwsDataCatalog",
+          "Schema": "logwarehouse",
+          "Name": "curated_clickstream",
+          "InputColumns": [
+            { "Name": "event_id", "Type": "STRING" },
+            { "Name": "event_ts", "Type": "DATETIME" },
+            { "Name": "dt", "Type": "STRING" },
+            { "Name": "session_id", "Type": "STRING" },
+            { "Name": "page", "Type": "STRING" },
+            { "Name": "action", "Type": "STRING" },
+            { "Name": "experiment_variant", "Type": "STRING" },
+            { "Name": "device", "Type": "STRING" },
+            { "Name": "country", "Type": "STRING" },
+            { "Name": "dwell_ms", "Type": "INTEGER" }
+          ]
+        }
+      }
+    },
+    "LogicalTableMap": {
+      "app_log": {
+        "Alias": "curated_app_log",
+        "Source": { "PhysicalTableId": "app_log" }
+      },
+      "clickstream": {
+        "Alias": "curated_clickstream",
+        "Source": { "PhysicalTableId": "clickstream" }
+      }
+    },
+    "ImportMode": "DIRECT_QUERY",
+    "DataSetId": "logwarehouse-events"
+  },
+  "CalculatedFields": {
+    "error_rate": "avg(ifelse({is_error}, 1, 0))",
+    "p95_latency_ms": "percentile({latency_ms}, 95)",
+    "freshness_minutes": "dateDiff(now(), max({event_ts}), 'MI')"
+  },
+  "RowLevelPermissions": "none",
+  "Description": "Curated app_log + clickstream from the Glue/PySpark pipeline. DIRECT_QUERY via Athena so QuickSight reads the live Parquet with partition projection (see sql/ddl_athena.sql)."
+}

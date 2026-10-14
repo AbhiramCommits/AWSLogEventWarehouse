@@ -1,0 +1,84 @@
+{
+  "manifestVersion": "1.0",
+  "resourceId": "logwarehouse-curated",
+  "name": "AWSLogEventWarehouse curated dataset",
+  "description": "Curated log-event tables produced by the Glue/PySpark job, wired to QuickSight via Athena.",
+  "dataSource": {
+    "name": "logwarehouse-athena",
+    "type": "ATHENA",
+    "athenaParameters": {
+      "workGroup": "primary",
+      "database": "logwarehouse"
+    },
+    "catalog": "AwsDataCatalog"
+  },
+  "datasets": [
+    {
+      "name": "curated_app_log",
+      "physicalTableMap": {
+        "app_log": {
+          "relationalTable": {
+            "catalog": "AwsDataCatalog",
+            "schema": "logwarehouse",
+            "name": "curated_app_log",
+            "inputColumns": [
+              { "name": "event_ts", "type": "DATETIME" },
+              { "name": "service", "type": "STRING" },
+              { "name": "status_class", "type": "STRING" },
+              { "name": "latency_ms", "type": "INTEGER" },
+              { "name": "is_error", "type": "BOOLEAN" },
+              { "name": "route", "type": "STRING" },
+              { "name": "dt", "type": "STRING" }
+            ]
+          }
+        }
+      },
+      "logicalTableMap": {
+        "app_log": {
+          "alias": "curated_app_log",
+          "source": { "physicalTableId": "app_log" }
+        }
+      }
+    },
+    {
+      "name": "curated_clickstream",
+      "physicalTableMap": {
+        "clickstream": {
+          "relationalTable": {
+            "catalog": "AwsDataCatalog",
+            "schema": "logwarehouse",
+            "name": "curated_clickstream",
+            "inputColumns": [
+              { "name": "event_ts", "type": "DATETIME" },
+              { "name": "session_id", "type": "STRING" },
+              { "name": "page", "type": "STRING" },
+              { "name": "action", "type": "STRING" },
+              { "name": "experiment_variant", "type": "STRING" },
+              { "name": "device", "type": "STRING" },
+              { "name": "country", "type": "STRING" },
+              { "name": "dt", "type": "STRING" }
+            ]
+          }
+        }
+      },
+      "logicalTableMap": {
+        "clickstream": {
+          "alias": "curated_clickstream",
+          "source": { "physicalTableId": "clickstream" }
+        }
+      }
+    }
+  ],
+  "dashboards": [
+    {
+      "name": "LogEventWarehouseOperations",
+      "sheets": [
+        "Event Volume",
+        "Latency",
+        "Reliability",
+        "Freshness & Alarms"
+      ]
+    }
+  ],
+  "notes": "This bundle is the QuickSight-side equivalent of src/dashboard/app.py. Point the Athena dataset at the curated Parquet via sql/ddl_athena.sql (partition projection) and recreate the five Streamlit tabs as QuickSight sheets."
+}

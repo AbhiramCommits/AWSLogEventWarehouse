@@ -88,6 +88,12 @@ monitor: ## Publish metrics, create alarms, evaluate the data-quality gate
 	$(BIN)/python -m monitoring.alarms
 	$(BIN)/python -m monitoring.alarms --check
 
+incident: ## Simulate a degraded window to prove the alarms fire
+	$(BIN)/python -m monitoring.simulate_incident
+
+restore: ## Clear the simulated incident window
+	$(BIN)/python -m monitoring.simulate_incident --restore
+
 dashboard: ## Serve the Streamlit dashboard
 	$(BIN)/streamlit run src/dashboard/app.py --server.port 8501 --server.headless true
 

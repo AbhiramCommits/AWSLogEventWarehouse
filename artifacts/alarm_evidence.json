@@ -1,0 +1,84 @@
+{
+  "simulated_at": "2026-10-14T07:58:22.364528+00:00",
+  "scenario": "stalled producer + error spike",
+  "degraded_metrics": {
+    "generated_at": "2026-10-14T07:58:22.334207+00:00",
+    "freshness_minutes": 360.0,
+    "total_events": 193143,
+    "events_last_hour": 0,
+    "events_last_hour_by_source": {},
+    "trailing_hourly_avg": 3720.83,
+    "events_last_hour_drop_pct": 100.0,
+    "ingest_lag_p50": 46.0,
+    "ingest_lag_p95": 88.0,
+    "ingest_lag_p99": 2520.0,
+    "error_rate_overall": 15.0,
+    "error_rate_by_service": {
+      "checkout": 30.0,
+      "recommendations": 2.2351,
+      "search": 2.0474,
+      "payments": 1.8956,
+      "catalog": 1.8924,
+      "auth": 1.8084
+    },
+    "quarantine_rate": 6.0,
+    "duplicate_rate": 1.9555,
+    "incident_active": true,
+    "scenario": "stalled producer + error spike"
+  },
+  "alarms": [
+    {
+      "name": "logwarehouse-freshness",
+      "metric": "PipelineFreshnessMinutes",
+      "threshold": 120.0,
+      "comparison": "GreaterThanThreshold",
+      "observed": 360.0,
+      "state": "ALARM",
+      "state_reason": "Threshold Crossed"
+    },
+    {
+      "name": "logwarehouse-rowcount-floor",
+      "metric": "EventsLastHour",
+      "threshold": 100.0,
+      "comparison": "LessThanThreshold",
+      "observed": 0.0,
+      "state": "ALARM",
+      "state_reason": "Threshold Crossed"
+    },
+    {
+      "name": "logwarehouse-rowcount-drop",
+      "metric": "EventsLastHourDropPct",
+      "threshold": 60.0,
+      "comparison": "GreaterThanThreshold",
+      "observed": 100.0,
+      "state": "ALARM",
+      "state_reason": "Threshold Crossed"
+    },
+    {
+      "name": "logwarehouse-error-rate",
+      "metric": "ErrorRate",
+      "threshold": 5.0,
+      "comparison": "GreaterThanThreshold",
+      "observed": 15.0,
+      "state": "ALARM",
+      "state_reason": "Threshold Crossed"
+    },
+    {
+      "name": "logwarehouse-quarantine-rate",
+      "metric": "QuarantineRate",
+      "threshold": 2.0,
+      "comparison": "GreaterThanThreshold",
+      "observed": 6.0,
+      "state": "ALARM",
+      "state_reason": "Threshold Crossed"
+    }
+  ],
+  "fired": [
+    "logwarehouse-freshness",
+    "logwarehouse-rowcount-floor",
+    "logwarehouse-rowcount-drop",
+    "logwarehouse-error-rate",
+    "logwarehouse-quarantine-rate"
+  ],
+  "all_fired": true
+}
