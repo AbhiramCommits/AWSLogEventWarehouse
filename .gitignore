@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Local artifacts: commit small reports, ignore bulky data + databases
+artifacts/*
+!artifacts/.gitkeep
+!artifacts/*.json
+!artifacts/*.md
+artifacts/curated/
+artifacts/quarantine/
+artifacts/raw/
+artifacts/tmp/
+*.duckdb
+*.duckdb.wal
+
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/.terraform.lock.hcl
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.*
+infra/terraform/terraform.tfvars
+infra/terraform/crash.log
+infra/terraform/.terraform.tfstate.lock.info
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Env
+.env

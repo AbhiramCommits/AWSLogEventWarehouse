@@ -1,0 +1,43 @@
+services:
+  localstack:
+    image: localstack/localstack:3.7.2
+    container_name: logwarehouse-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,kinesis,firehose,glue,cloudwatch,logs,sns,iam,sts
+      - DEBUG=0
+      - PERSISTENCE=1
+      - DISABLE_CORS_CHECKS=1
+      - SKIP_INFRA_DOWNLOADS=1
+      - LAMBDA_EXECUTOR=local
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - localstack-data:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:4566/_localstack/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  # Glue Data Catalog and the Firehose control plane are LocalStack "pro"
+  # features, so we run the same genuine boto3/terraform API calls against a
+  # moto server for just those two services. Everything else stays on
+  # LocalStack. See docs/runbook.md for the rationale.
+  moto:
+    image: motoserver/moto:5.0.28
+    container_name: logwarehouse-moto
+    ports:
+      - "4567:5000"
+    environment:
+      - MOTO_PORT=5000
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://localhost:5000/moto-api/')"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+volumes:
+  localstack-data:
+    name: logwarehouse-localstack-data
